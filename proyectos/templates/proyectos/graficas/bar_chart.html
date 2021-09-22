@@ -1,0 +1,272 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block titulo %}Panel de Control{% endblock titulo %}
+
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            {% if total_costo_proyectos.total_costo_proyectos == None %}
+                                <h3>$0</h3>
+                            {% else %}
+                                <h3>${{total_costo_proyectos.total_costo_proyectos|intcomma}}</h3>
+                            {% endif %}
+                            <p>Total costo proyectos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cash"></i>
+                        </div>
+                        <a href="{% url 'listado_costos' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            {% if total_pagos_proyectos.Total_Pagos_proyectos == None %}
+                                <h3>$0</h3>
+                            {% else %} 
+                                <h3>${{total_pagos_proyectos.Total_Pagos_proyectos|intcomma}}</h3>
+                            {% endif %}
+                            <p>Total pagos realizados</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <a href="{% url 'listado_pagos' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>{{suma_cant_proy_eje|safe}} {% if suma_cant_proy_eje > 1 or suma_cant_proy_eje == 0 %}proyectos{% else %}proyecto{% endif %} </h3>
+                            <p>En ejecución</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-angle-double-right"></i>
+                        </div>
+                        <a href="{% url 'listado_proy_ejec' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{suma_cant_proy_sus|safe}} {% if suma_cant_proy_sus > 1 or suma_cant_proy_sus == 0 %}Proyectos{% else %}Proyecto{% endif %}</h3>
+                            <p>{% if suma_cant_proy_sus > 1 or suma_cant_proy_sus == 0 %}Suspendidos{% else %}Suspendido{% endif %}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                        <a href="{% url 'listado_proy_susp' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{suma_cant_proy_canc|safe}} {% if suma_cant_proy_canc > 1 or suma_cant_proy_canc == 0 %}Proyectos{% else %}Proyecto{% endif %}</h3>
+                            <p>{% if suma_cant_proy_canc > 1 or suma_cant_proy_canc == 0 %}Cancelados{% else %}cancelado{% endif %}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                        <a href="{% url 'listado_proy_canc' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{suma_cant_proy_fin|safe}} {% if suma_cant_proy_fin > 1 or suma_cant_proy_fin == 0 %}proyectos{% else %}proyecto{% endif %}</h3>
+                            <p>{% if suma_cant_proy_fin > 1 or suma_cant_proy_fin == 0 %}Finalizados{% else %}Finalizado{% endif %}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <a href="{% url 'listado_proy_fin' %}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="small-box bg-dark">
+                        <div class="inner">
+                            <h3>{{porcentaje_ejecucion|safe|floatformat}}%</h3>
+                            <p>De ejecución</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                {% if not data  %}
+
+                {% else %}
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Gráfico Costo Proyectos</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="myChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Cantidad Proyectos por Terminal</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="myChart3"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> 
+                {% endif %}
+                    
+                
+                {% if not queryset %}
+
+                {% else %}
+                <div class="col-md-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Avance Proyectos</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped projects">
+                                <thead>
+                                    <tr>
+                                        <th>Proyecto</th>
+                                        <th>Progreso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in queryset %}
+                                    <tr>
+                                        <td><a href="{% url  'detalle_actividad' p.id %}">{{p.nombre}}</a></td>
+                                        <td class="project_progress">
+                                            <small>
+                                                {% if p.programado == None %}
+                                                    Programado 0,0%
+                                                {% else %}
+                                                    Programado {{p.programado}}%
+                                                {% endif %}
+                                            </small>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="57"
+                                                    aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.programado|safe}}%">
+                                                </div>
+                                            </div>
+
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-orange" role="progressbar"
+                                                    aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.avance|safe}}%">
+                                                </div>
+                                            </div>
+                                            <small>
+                                                {% if p.avance == None %}
+                                                    Ejecutado 0,0%
+                                                {% else %}
+                                                    Ejecutado {{p.avance}}%
+                                                {% endif %}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                {% endif %}
+                    
+               
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
+    integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: {{labels|safe}},
+            datasets: [{
+                label: {{labels|safe}},
+                data: {{data|safe}},
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                borderWidth: 1,
+            }]
+        },
+    });
+
+
+    var ctx = document.getElementById('myChart3');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Buenaventura', 'Cartagena', 'Bogota'],
+            datasets: [{
+                label: 'Cant. Proyectos',
+                data: {{total_proyecto|safe}},
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+            legend: {
+                display: false,
+                labels: {
+                    color: 'rgb(255, 99, 132)'
+                }
+            }
+        }
+        }
+    });
+</script>
+
+{% endblock contenido %}

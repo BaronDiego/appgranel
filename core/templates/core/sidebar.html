@@ -1,0 +1,71 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <a href="{% url 'graficos' %}" class="brand-link">
+    <img src="{% static 'img/favicon.png' %}" alt="Logo AppGranel" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light"><b>AppGranel</b> </span>
+  </a>
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">¡Hola! {{user.username|escape}}</a>
+      </div>
+    </div>
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a href="{% url 'proyectos_list' %}" class="nav-link">
+            <i class="fas fa-list-ul"></i>
+            <p>Listado de proyectos</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>Acciones<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'crear_proeycto' %}" class="nav-link">
+                <i class="fas fa-project-diagram"></i>
+                <p>Nuevo proyecto</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_pago' %}" class="nav-link">
+                <i class="fas fa-money-check-alt"></i>
+                <p>Crear pago</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_documento' %}" class="nav-link">
+                <i class="fas fa-file-alt"></i>
+                <p>Cargar documento</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'cargar_imagen' %}" class="nav-link">
+                <i class="fas fa-images"></i>
+                <p>Cargar imágen</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_cambio' %}" class="nav-link">
+                <i class="fas fa-file-invoice"></i>
+                <p>Crear control de cambio</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_actividad' %}" class="nav-link">
+                <i class="fas fa-tasks"></i>
+                <p>Crear actividad</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
